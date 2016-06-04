@@ -1,22 +1,28 @@
 #define DEBOUNCE_TIME_MS 100
+volatile int count = 0;
 
 ISR(PCINT0_vect) {
-  delay(DEBOUNCE_TIME_MS);
-  digitalWrite(13, HIGH);
-  start_timer();
+  /* interrupt fired on digital pin 8-13 */
+  PCMSK0 = 0x00;  // disable pin interrupts
+  Serial.println("hej");
+  Serial.println(count++);
+  start_timer();  // timer to protect from too frequent switches
 }
 
 ISR(TIMER1_COMPA_vect) {
-  digitalWrite(13, LOW);
+  /* timer interrupt */
+  enable_pin_interrupts();
   TIMSK1 &= ~(1 << OCIE1A);  // stop timer
 }
-
 
 void init_pin_interrupts() {
   cli();  // disable interrupts
   PCICR |= (1 << PCIE0);  // enable interrupts on PC0
-  PCMSK0 |= (1 << PCINT1); // enable interrupt on PCINT1 (pin 9)
   sei();  // enable interrupts
+}
+
+void enable_pin_interrupts() {
+  PCMSK0 |= (1 << PCINT1) | (1 << PCINT2); // enable interrupts
 }
 
 void init_timer() {
@@ -25,7 +31,7 @@ void init_timer() {
   TCCR1A = 0x00;  // reset register
   TCCR1B = 0x00;  // reset register
   //TCNT1 = 0;    // reset counter
-  OCR1A = 15624; // set counter top value
+  OCR1A = 15624*3; // set counter top value
   TCCR1B |= (1 << WGM12); // set ctc mode
   TCCR1B |= (1 << CS12) | (1 << CS10); // set clock source
   //TIMSK1 |= (1 << OCIE1A);  // enable compare match on OCRA
@@ -41,9 +47,11 @@ void start_timer() {
 void setup() {
   /* pin setups */
   pinMode(9, INPUT);
-  pinMode(13, OUTPUT);
+  pinMode(10, INPUT);
   init_timer();
   init_pin_interrupts();
+  enable_pin_interrupts();
+  Serial.begin(9600);
 }
 
 void loop() {

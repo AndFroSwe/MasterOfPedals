@@ -1,11 +1,19 @@
 #define DEBOUNCE_TIME_MS 100
-volatile int count = 0;
+volatile int int_pin = 0;
 
 ISR(PCINT0_vect) {
   /* interrupt fired on digital pin 8-13 */
   PCMSK0 = 0x00;  // disable pin interrupts
-  Serial.println("hej");
-  Serial.println(count++);
+  if (PINB & (1 << PB1)) {
+    int_pin = 9;
+  } else if (PINB & (1 << PB2)) {
+    int_pin = 10;
+  } else {
+    int_pin = 100;
+  }
+  Serial.print("Interrupt on: ");
+  Serial.println(int_pin);
+  int_pin = 0;  // pin sense reset
   start_timer();  // timer to protect from too frequent switches
 }
 
@@ -31,7 +39,7 @@ void init_timer() {
   TCCR1A = 0x00;  // reset register
   TCCR1B = 0x00;  // reset register
   //TCNT1 = 0;    // reset counter
-  OCR1A = 15624*3; // set counter top value
+  OCR1A = 15624 * 3; // set counter top value
   TCCR1B |= (1 << WGM12); // set ctc mode
   TCCR1B |= (1 << CS12) | (1 << CS10); // set clock source
   //TIMSK1 |= (1 << OCIE1A);  // enable compare match on OCRA

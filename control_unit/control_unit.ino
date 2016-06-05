@@ -17,12 +17,7 @@ void setup()
   {
     pinMode(all_pedals[i], OUTPUT);
   }
-
   Serial.begin(9600);  // start serial
-  Serial.println(sizeof(all_pedals)/sizeof(int));
-  Serial.println(sizeof(all_modes)/sizeof(int));
-  
-
 }
 
 void loop()
@@ -33,7 +28,6 @@ void loop()
     received = Serial.read();
     int received_as_int = received - '0'; // convert ascii to corresponding int
     if ((received_as_int >= 0) && (received_as_int < sizeof(all_pedals)/sizeof(int))) { // protect against non-valid inputs
-      Serial.println(received_as_int);
       enable_pedals(received_as_int);
     }
   }

@@ -20,4 +20,4 @@ which preset is currently chosen.
 
 - __./Software/__ contains all source code for the MCUs. Divided into subfolders
 corresponding to the stage pedal and the control unit.
-- __./KiCad/__ contains electrical schematics. Devided into subfolders corresponding to the stage pedal and the control unit.
+- __./KiCad/__ contains electrical schematics. Divided into subfolders corresponding to the stage pedal and the control unit.

@@ -1,6 +1,6 @@
 # Master of Pedals
 A guitar pedal switching rig. Readymade presets are chosen by hitting a
-footswitch on the floor pedal. 
+footswitch on the stage pedal. 
 
 # Features
 
@@ -18,6 +18,6 @@ which preset is currently chosen.
 
 # Repository guide
 
-- __./Software/__ contains all source code for the MCUs. Devided into subfolders
+- __./Software/__ contains all source code for the MCUs. Divided into subfolders
 corresponding to the stage pedal and the control unit.
-- __./KiCad/__ contains electrical schematics.
+- __./KiCad/__ contains electrical schematics. Devided into subfolders corresponding to the stage pedal and the control unit.

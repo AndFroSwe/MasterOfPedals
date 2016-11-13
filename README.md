@@ -43,3 +43,4 @@ in a mini control unit that is carried on the guitar.
 - __Internal pedal power supply__: The control unit contains a PSU that can feed
   the guitar pedals with power.
 - __Battery power supply__: The stage pedal runs on battery.
+- __Data logging__: The pedal remembers which presets have been used.

@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name FroLib)(type KiCad)(uri C:\Users\andfr\Documents\frolib\FroLib.pretty)(options "")(descr ""))
+)

@@ -1,4 +1,4 @@
-update=10/31/2016 7:48:27 PM
+update=12/16/2016 7:17:05 AM
 version=1
 last_client=kicad
 [pcbnew]
@@ -58,4 +58,6 @@ LibName26=opto
 LibName27=atmel
 LibName28=contrib
 LibName29=valves
-LibName30=pedals
+LibName30=C:/Users/Andreas Fröderberg/Documents/FroLib/FroLib/Fro_Relays
+LibName31=Fro_Relays
+LibName32=C:/Users/Andreas Fröderberg/Documents/FroLib/FroLib/FroLib

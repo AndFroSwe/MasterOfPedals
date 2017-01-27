@@ -12,11 +12,14 @@
 #define PORT_OFF(reg, p) reg &= ~_BV(p)
 /* Pedal ports */
 #define P1_PORT PORTC
-#define P1 PC3
-#define P2_PORT PORTC
-#define P2 PC4
+#define P1_DD DDRC
+#define P1 PC5
+#define P2_PORT PORTB
+#define P2_DD DDRB
+#define P2 PB0
 #define P3_PORT PORTC
-#define P3 PC5
+#define P3_DD DDRC
+#define P3 PC3
 /* Button debounce */
 #define BUT_REG PORTD /* Button register */
 #define BUT PD1 /* Button pin */
@@ -28,11 +31,15 @@
 /* Includes */
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#define F_CPU 8000000UL
+#include <util/delay.h>
+
 
 /* Typedefs */
 typedef enum pedalstates {ON, OFF} pedalstates;
 
 /* Function prototypes */
+void setupPins(void);
 void changePreset(pedalstates *); /* Engages pedals according to preset */
 inline void buttonRead(void); /* Debounced read of a button */
 void setupTimerInterrupt(void); /* Setup timer interrupt used in button db*/

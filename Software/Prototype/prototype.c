@@ -16,14 +16,30 @@
  * { pedal 1, pedal 2, amp channel }
  */
 pedalstates preset1[PEDAL_COUNT] = {ON, ON, OFF};
+pedalstates preset2[PEDAL_COUNT] = {OFF, ON, OFF};
 
 int main(int argc, char *argv[])
 {
+    setupPins();
     setupTimerInterrupt();
-    while(1){}
+    while(1)
+    {
+        _delay_ms(1000);
+        changePreset(preset1);
+        _delay_ms(1000);
+        changePreset(preset2);
+
+    }
     return 0;
 }
 
+void setupPins(void) 
+{
+    /* Set pins to output */
+    PORT_ON(P1_DD, P1);
+    PORT_ON(P2_DD, P2);
+    PORT_ON(P3_DD, P3);
+}
 void changePreset(pedalstates *preset)
 {
     /* Checks all desired presets and enables needed pedals */

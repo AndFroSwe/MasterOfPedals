@@ -22,6 +22,7 @@
 #define P3 PC3
 /* Button debounce */
 #define BUT_REG PORTD /* Button register */
+#define BUT_DD DDRD /* Button register */
 #define BUT PD1 /* Button pin */
 #define DEBOUNCE_MS 5 /* ms between button reads */
 #define F_CLK 8000000UL /* Internal clock frequency [Hz] */
@@ -36,7 +37,7 @@
 
 
 /* Typedefs */
-typedef enum pedalstates {ON, OFF} pedalstates;
+typedef volatile enum pedalstates {ON, OFF} pedalstates;
 
 /* Function prototypes */
 void setupPins(void);

@@ -24,11 +24,6 @@ int main(int argc, char *argv[])
     setupTimerInterrupt();
     while(1)
     {
-        _delay_ms(1000);
-        changePreset(preset1);
-        _delay_ms(1000);
-        changePreset(preset2);
-
     }
     return 0;
 }
@@ -39,6 +34,10 @@ void setupPins(void)
     PORT_ON(P1_DD, P1);
     PORT_ON(P2_DD, P2);
     PORT_ON(P3_DD, P3);
+    /* Set pins to input */
+    PORT_OFF(BUT_DD, BUT);
+    /* Enable internal pullups */
+    PORT_ON(BUT_REG, BUT);
 }
 void changePreset(pedalstates *preset)
 {
@@ -65,13 +64,14 @@ void changePreset(pedalstates *preset)
 
 inline void buttonRead(void)
 {
-    static uint16_t read_mask = 0xe000; /* Masks out unwanted values */
-    static uint16_t state = 0x00; /* Pin history */
-    /* Shift | read button | mask away ignored values */
-    state = (state << 1) | (BUT_REG & _BV(BUT)) >> BUT | (read_mask << 1);
-    if (state == read_mask) {
-        changePreset(preset1);
-    }
+    static read_mask = 0xf000;
+	static uint16_t State = 0x00; /* Contains state history */
+	/* Move state | Poll pin | Dont care */
+	State = (State<<1) | ((PIND & _BV(BUT)) >> BUT) | (read_mask << 1);
+	if (State == read_mask) { /* State == state comparison */
+		/* Button action */
+            PORTC ^= _BV(P1);
+		}
 }
 
 void setupTimerInterrupt (void) 
